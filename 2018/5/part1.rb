@@ -1,20 +1,17 @@
-$global_data = File.readlines('input.txt')[0].split(//)
-$deleted = true
-def react_with_adjacent_units()
-    while ($deleted) do
-        $deleted = false
-        $global_data.each_with_index { |x, index|
-            if ((index+1) == $global_data.length)
-                next
-            end
-            if ($global_data[index] != $global_data[index+1] && $global_data[index].casecmp($global_data[index+1]) == 0)
-                $deleted = true
-                $global_data.delete_at(index+1)
-                $global_data.delete_at(index)
-            end
-        }
+def react_with_adjacent_units(data)
+    remainder = []
+    while (data.length > 0) do
+        if (data[-2] == nil); break end
+        if (data[-1] != data[-2] && data[-1].casecmp(data[-2]) == 0)
+            data.pop(2)
+            data = data << remainder.pop() unless remainder[-1].nil?
+            next
+        end
+        remainder << data.pop()
     end
+    return data.length + remainder.length
 end
 
-value = react_with_adjacent_units()
-puts "Resulting Polymer: #{$global_data.join()}, len = #{$global_data.length}"
+data = File.readlines('input.txt')[0].split(//)
+value = react_with_adjacent_units(data)
+puts "Resulting Polymer: #{value}"
