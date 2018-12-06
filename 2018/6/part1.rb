@@ -1,37 +1,34 @@
 load 'common.rb'
 
-grid_point_to_input_point_distance = {}
+loc_to_coord_distance = Hash.new { |h, k| h[k] = {} }
 
-$x_range.each { |x|
-    $y_range.each { |y|
-        $points.each { |point|
-            dist = manhattan_distance(point, Point.new(x,y))
-            if (grid_point_to_input_point_distance[[x,y]] == nil)
-                grid_point_to_input_point_distance[[x,y]] = {}
-            end
-            grid_point_to_input_point_distance[[x,y]][[point.x, point.y]] = dist
-        }
-    }
-}
-
-closest_points = []
-infinite = []
-grid_point_to_input_point_distance.each { |grid_point, point_list|
-    min_point = nil
-    min_dist = 999999
-    point_list.each { |point, dist|
-        if (dist < min_dist)
-            min_dist = dist
-            min_point = point
-        elsif (dist == min_dist)
-            min_point = nil
+$x_range.each do |x|
+    $y_range.each do |y|
+        location = Point.new(x,y)
+        $coords.each do |coordinate|
+            loc_to_coord_distance[location][coordinate] = manhattan_distance(coordinate, location)
         end
-    }
-    if (grid_point[0] == $x_range.begin || grid_point[1] == $y_range.begin || grid_point[0] == $x_range.end || grid_point[1] == $y_range.end)
-        infinite << min_point
+    end
+end
+
+closest_coords = [], infinite = []
+loc_to_coord_distance.each do |location, coord_list|
+    min_coord = nil, min_dist = nil
+    coord_list.each do |coord, dist|
+        if (min_dist == nil || dist < min_dist)
+            min_dist = dist
+            min_coord = coord
+        elsif (dist == min_dist)
+            min_coord = nil
+        end
+    end
+
+    if (infinite?(location))
+        infinite << min_coord
         next
     end
-    closest_points << min_point unless min_point == nil
-}
-freq = closest_points.select { |p| !infinite.include?(p) }.inject(Hash.new(0)) { |h,v| h[v] += 1; h }.max_by { |_, v| v }
+
+    closest_coords << min_coord unless min_coord == nil
+end
+freq = closest_coords.select { |p| !infinite.include?(p) }.inject(Hash.new(0)) { |h,v| h[v] += 1; h }.max_by { |_, v| v }
 puts "freq = #{freq}"

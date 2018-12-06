@@ -1,14 +1,14 @@
 load 'common.rb'
 
 min_dist = {}
-$x_range.each { |x|
-    $y_range.each { |y|
+$x_range.each do |x|
+    $y_range.each do |y|
         dist = 0
-        grid_point = Point.new(x,y)
-        $points.each { |point|
-            dist += manhattan_distance(point, grid_point)
-        }
-        min_dist[grid_point] = dist
-    }
-}
-puts min_dist.select { |k,v| v < 10000}.length
+        location = Point.new(x,y)
+        $coords.each do |coord|
+            dist += manhattan_distance(location, coord)
+        end
+        min_dist[location] = dist
+    end
+end
+puts min_dist.select { |_, dist| dist < 10000}.length
