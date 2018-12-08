@@ -1,8 +1,12 @@
 $input_data = File.readlines('input.txt')[0].split().map { |v| v.to_i }
 class TNode
 
+    def initialize
+        @children = []
+        @metadata = []
+    end
+
     def addChild(child)
-        @children ||= []
         @children << child
     end
 
@@ -11,7 +15,7 @@ class TNode
     end
 
     def value()
-        if @children == nil
+        if @children.empty?
             return @metadata.reduce(0, :+)
         else
             total_value = 0

@@ -9,4 +9,4 @@ def parse(children, metadata)
 end
 
 parse($data.shift, $data.shift)
-puts "#{$result}"
+puts $result
