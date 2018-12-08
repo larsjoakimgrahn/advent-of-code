@@ -6,7 +6,7 @@ class TNode
         @metadata = []
     end
 
-    def addChild(child)
+    def add_child(child)
         @children << child
     end
 
@@ -34,7 +34,7 @@ end
 def parse(children, metadata)
     node = TNode.new()
     for _ in 0...(children) do
-        node.addChild(parse($input_data.shift, $input_data.shift))
+        node.add_child(parse($input_data.shift, $input_data.shift))
     end
 
     node.set_metadata($input_data.shift(metadata))
