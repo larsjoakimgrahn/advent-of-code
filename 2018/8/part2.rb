@@ -14,10 +14,7 @@ end
 
 def parse(children, metadata)
     node = TNode.new()
-    Array.new(children).each do
-        node.children << parse($input_data.shift, $input_data.shift)
-    end
-
+    Array.new(children).each { node.children << parse($input_data.shift, $input_data.shift) }
     node.metadata = $input_data.shift(metadata)
     return node
 end
