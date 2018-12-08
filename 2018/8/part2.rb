@@ -8,7 +8,7 @@ class TNode
     end
 
     def value()
-        @children.empty? ? @metadata.sum : @metadata.map { |m| @children[m-1].value() unless @children[m-1] == nil }.compact.sum
+        @children.empty? ? @metadata.sum : @metadata.map { |m| @children[m-1]&.value }.compact.sum
     end
 end
 
