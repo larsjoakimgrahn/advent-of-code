@@ -14,7 +14,7 @@ end
 
 def parse(children, metadata)
     node = TNode.new()
-    for _ in 0...(children) do
+    Array.new(children).each do
         node.children << parse($input_data.shift, $input_data.shift)
     end
 
