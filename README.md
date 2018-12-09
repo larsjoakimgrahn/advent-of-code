@@ -3,4 +3,6 @@ Advent of code stuff
 
 https://adventofcode.com
 
-Only includes solution for part 2, at least for 2018-1 and 2018-2.
+Trying out ruby for fun and giggles.
+
+Some days only include solution for part 2.
