@@ -1,11 +1,13 @@
 class Cart
     attr_reader :x, :y, :direction
+    attr_accessor :deleted
     def initialize(x,y,direction)
         @x = x
         @y = y
         @direction = direction
         @num_turns = 0
         @turn_order = ['left', 'straight', 'right']
+        @deleted = false
     end
 
     def turn_dir()
