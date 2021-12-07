@@ -5,10 +5,7 @@
 @crabs.length.times do |idx|
   @crabs.each do |crab|
     distance = (crab - idx).abs
-    fuel = 0
-    distance.times do |dist|
-      fuel += (dist + 1)
-    end
+    fuel = (distance * (1 + distance)) / 2
     @distances[idx] += fuel
   end
 end
