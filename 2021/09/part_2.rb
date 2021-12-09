@@ -1,16 +1,11 @@
 @field = File.readlines('input.txt').map { |line| line.strip.chars.map(&:to_i) }
 
 def adjacent(x, y)
-  above = y == 0 ? 10 : (@field[y - 1] || [])[x]     || 10
-  left =  x == 0 ? 10 : (@field[y]     || [])[x - 1] || 10
-  right = (@field[y]     || [])[x + 1] || 10
-  below = (@field[y + 1] || [])[x]     || 10
-
   result = {}
-  result[[x, y - 1]] = above
-  result[[x - 1, y]] = left
-  result[[x + 1, y]] = right
-  result[[x, y + 1]] = below
+  result[[x, y - 1]] = y == 0 ? 10 : (@field[y - 1] || [])[x] || 10
+  result[[x - 1, y]] = x == 0 ? 10 : (@field[y] || [])[x - 1] || 10
+  result[[x + 1, y]] = (@field[y]     || [])[x + 1] || 10
+  result[[x, y + 1]] = (@field[y + 1] || [])[x]     || 10
   result
 end
 
@@ -36,4 +31,5 @@ end
 @global_minimums.each do |k, v|
   @basins[[k[0], k[1]]] = find_basin(k[0], k[1], v)
 end
+
 p @basins.values.sort.last(3).inject { |a, b| a * b }
